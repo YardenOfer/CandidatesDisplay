@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+  <body>
+    <h2>Fetch Example</h2>
+    <p id="candidates"></p>
+    <script>
+      fetch("http://127.0.0.1:3000/candidates")
+        .then((res) => res.json())
+        .then((x) => {
+          let str = "";
+          for (let i = 0; i < x.length; i++) {
+            if (x[i]["contact_info"] && x[i]["contact_info"]["name"]) {
+              str +=
+                "<br/><b> Hello " +
+                x[i]["contact_info"]["name"]["formatted_name"];
+              ("</b>");
+              if (x[i]["experience"]) {
+                str += "<br/><br/>";
+                let exp = x[i]["experience"];
+                for (let k = 0; k < exp.length; k++) {
+                  str += `Worked as: ${exp[k]["title"]}, from ${exp[k]["start_date"]} to ${exp[k]["end_date"]} <br/>`;
+                }
+              }
+            }
+          }
+          document.getElementById("candidates").innerHTML += str;
+        });
+    </script>
+  </body>
+</html>
